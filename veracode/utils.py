@@ -36,6 +36,7 @@ from defusedxml import ElementTree  # type: ignore
 
 # custom
 from veracode import constants, __project_name__
+from security import safe_requests
 
 if TYPE_CHECKING:
     from veracode.api import ResultsAPI, UploadAPI, SandboxAPI
@@ -106,8 +107,7 @@ def http_request(  # pylint: disable=too-many-statements
     try:
         LOG.debug("Querying the %s endpoint with a %s", url, verb)
         if verb == "get":
-            response = requests.get(
-                url,
+            response = safe_requests.get(url,
                 params=params,
                 headers=headers,
                 auth=RequestsAuthPluginVeracodeHMAC(),
