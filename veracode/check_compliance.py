@@ -69,8 +69,7 @@ def get_policy_compliance_status(*, results_api: ResultsAPI) -> Union[str, None]
     policy_compliance_status = "Unknown"
 
     LOG.debug("Calling get_latest_completed_scan")
-    latest_completed_build = get_latest_completed_build(results_api=results_api)
-    if latest_completed_build:
+    if latest_completed_build := get_latest_completed_build(results_api=results_api):
         for build in latest_completed_build.iter(tag=tag):
             policy_compliance_status = build.get("policy_compliance_status")
     else:
@@ -85,8 +84,7 @@ def in_compliance(*, results_api: ResultsAPI) -> bool:
     Identify if a policy compliance status is sufficient
     """
     LOG.debug("Calling get_policy_compliance_status")
-    compliance_status = get_policy_compliance_status(results_api=results_api)
-    if compliance_status != "Unknown":
+    if (compliance_status := get_policy_compliance_status(results_api=results_api)) != "Unknown":
         LOG.debug(
             "app_id %s has a compliance status of %s",
             results_api.app_id,
