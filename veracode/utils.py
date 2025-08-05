@@ -111,7 +111,7 @@ def http_request(  # pylint: disable=too-many-statements
                 params=params,
                 headers=headers,
                 auth=RequestsAuthPluginVeracodeHMAC(),
-            )
+            timeout=60)
         if verb == "post":
             response = requests.post(
                 url,
@@ -119,7 +119,7 @@ def http_request(  # pylint: disable=too-many-statements
                 params=params,
                 headers=headers,
                 auth=RequestsAuthPluginVeracodeHMAC(),
-            )
+            timeout=60)
 
         LOG.debug("Received a status code of %s", response.status_code)
         LOG.debug("Received content of %s", response.content)
